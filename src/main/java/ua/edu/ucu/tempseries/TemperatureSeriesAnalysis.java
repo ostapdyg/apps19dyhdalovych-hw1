@@ -32,6 +32,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double deviation() {
+        this.checkEmpty();
         double av = this.average();
         double sum = 0;
         for (double temp : this.temps) {
@@ -41,28 +42,71 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() {
-        
-        return 0;
+        this.checkEmpty();
+        double res = this.temps[0];
+        for (double temp:temps) {
+            if(temp<res){
+                res = temp;
+            }
+        }
+        return res;
     }
 
     public double max() {
-        return 0;
+        this.checkEmpty();
+        double res = this.temps[0];
+        for (double temp:temps) {
+            if(temp>res){
+                res = temp;
+            }
+        }
+        return res;
     }
 
     public double findTempClosestToZero() {
-        return 0;
+        return this.findTempClosestToValue(0.0);
     }
 
     public double findTempClosestToValue(double tempValue) {
-        return 0;
+        this.checkEmpty();
+        double res = this.temps[0];
+        for (double temp:temps) {
+            if (Math.abs(temp-tempValue) < Math.abs(res-tempValue)) {
+                res = temp;
+            }
+        }
+        return res;
+
     }
 
     public double[] findTempsLessThen(double tempValue) {
-        return null;
+        this.checkEmpty();
+        double[] res = new double[this.size];
+        int i = 0;
+        for (double temp:temps) {
+            if (temp < tempValue) {
+                res[i] = temp;
+                i +=1;
+            }
+        }
+        double[] new_res = new double[i];
+        System.arraycopy(res, 0, new_res, 0, i);
+        return new_res;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
-        return null;
+        this.checkEmpty();
+        double[] res = new double[this.size];
+        int i = 0;
+        for (double temp:temps) {
+            if (temp > tempValue) {
+                res[i] = temp;
+                i +=1;
+            }
+        }
+        double[] new_res = new double[i];
+        System.arraycopy(res, 0, new_res, 0, i);
+        return new_res;
     }
 
     public TempSummaryStatistics summaryStatistics() {
@@ -108,4 +152,6 @@ public class TemperatureSeriesAnalysis {
             throw new IllegalArgumentException();
         }
     }
+
+
 }

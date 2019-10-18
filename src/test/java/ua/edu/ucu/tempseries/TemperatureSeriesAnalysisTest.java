@@ -27,7 +27,7 @@ public class TemperatureSeriesAnalysisTest {
         double expResult = -1.0;
 
         // call tested method
-        double actualResult = analysis.average();
+        double actualResult = oneElemAnalysis.average();
 
         // compare expected result with actual result
         assertEquals(expResult, actualResult, 0.00001);
@@ -72,6 +72,47 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(expResult, actualResult, 0.00001);
     }
 
+    @Test
+    public void testMinWithOneElementArray() {
+        double expResult = -1.0;
+        double actualResult = oneElemAnalysis.min();
+        assertEquals(expResult, actualResult, 0.00001);
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testMinWithEmptyArray() {
+        emptyAnalysis.min();
+    }
 
+    @Test
+    public void testMin() {
+
+        double expResult = -5.0;
+
+        double actualResult = analysis.min();
+
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testMaxWithOneElementArray() {
+        double expResult = -1.0;
+        double actualResult = oneElemAnalysis.max();
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMaxWithEmptyArray() {
+        emptyAnalysis.min();
+    }
+
+    @Test
+    public void testMax() {
+
+        double expResult = 5.0;
+
+        double actualResult = analysis.min();
+
+        assertEquals(expResult, actualResult, 0.00001);
+    }
 }
