@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.junit.Ignore;
 
 public class TemperatureSeriesAnalysisTest {
-    TemperatureSeriesAnalysis oneElemAnalysis;
-    TemperatureSeriesAnalysis emptyAnalysis;
-    TemperatureSeriesAnalysis analysis;
+    private TemperatureSeriesAnalysis oneElemAnalysis;
+    private TemperatureSeriesAnalysis emptyAnalysis;
+    private TemperatureSeriesAnalysis analysis;
 
     @Before
     public void setup(){
@@ -103,7 +103,7 @@ public class TemperatureSeriesAnalysisTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testMaxWithEmptyArray() {
-        emptyAnalysis.min();
+        emptyAnalysis.max();
     }
 
     @Test
@@ -111,7 +111,51 @@ public class TemperatureSeriesAnalysisTest {
 
         double expResult = 5.0;
 
-        double actualResult = analysis.min();
+        double actualResult = analysis.max();
+
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testClosestToZeroWithOneElementArray() {
+        double expResult = -1.0;
+        double actualResult = oneElemAnalysis.findTempClosestToZero();
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testClosestToZeroWithEmptyArray() {
+        emptyAnalysis.findTempClosestToZero();
+    }
+
+    @Test
+    public void testClosestToZero() {
+
+        double expResult = 1.0;
+
+        double actualResult = analysis.findTempClosestToZero();
+
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testClosestToValueWithOneElementArray() {
+        double expResult = -1.0;
+        double actualResult = oneElemAnalysis.findTempClosestToValue(2.0);
+        assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testClosestToValueWithEmptyArray() {
+        emptyAnalysis.findTempClosestToValue(2.0);
+    }
+
+    @Test
+    public void testClosestToValue() {
+
+        double expResult = 3.0;
+
+        double actualResult = analysis.findTempClosestToValue(2.0);
 
         assertEquals(expResult, actualResult, 0.00001);
     }
