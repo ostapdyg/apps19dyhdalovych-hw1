@@ -159,4 +159,59 @@ public class TemperatureSeriesAnalysisTest {
 
         assertEquals(expResult, actualResult, 0.00001);
     }
+
+    @Test
+    public void testTempsLessWithOneElementArray() {
+        double[] expResult = {-1.0};
+        double[] actualResult = oneElemAnalysis.findTempsLessThen(2.0);
+        assertArrayEquals(expResult, actualResult, 0.0000001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testTempsLessWithEmptyArray() {
+        emptyAnalysis.findTempsLessThen(2.0);
+    }
+
+    @Test
+    public void testTempsLess() {
+
+        double[] expResult = {-5.0, 1.0};
+
+        double[] actualResult = analysis.findTempsLessThen(2.0);
+
+        assertArrayEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testTempsGreaterWithOneElementArray() {
+        double[] expResult = {};
+        double[] actualResult = oneElemAnalysis.findTempsGreaterThen(2.0);
+        assertArrayEquals(expResult, actualResult, 0.0000001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testTempsGreaterWithEmptyArray() {
+        emptyAnalysis.findTempsGreaterThen(2.0);
+    }
+
+    @Test
+    public void testTempsGreater() {
+
+        double[] expResult = {3.0, 5.0};
+
+        double[] actualResult = analysis.findTempsGreaterThen(2.0);
+
+        assertArrayEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testTempsSummary() {
+        TempSummaryStatistics summary = analysis.summaryStatistics();
+        assertEquals(summary.avgTemp, 1.0, 0.00000001);
+        assertEquals(summary.minTemp, -5.0, 0.00000001);
+        assertEquals(summary.maxTemp, 5.0, 0.00000001);
+        assertEquals(summary.devTemp, 3.84057287, 0.00000001);
+
+    }
+
 }
