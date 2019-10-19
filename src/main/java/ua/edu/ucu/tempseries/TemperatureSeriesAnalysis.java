@@ -5,10 +5,10 @@ import java.util.InputMismatchException;
 
 
 public class TemperatureSeriesAnalysis {
-        private double[] temps;
-        private int size;
-        private int capacity;
-        final double MIN_TEMP = -273.;
+    private final double MIN_TEMP = -273.;
+    private double[] temperatures;
+    private int size;
+    private int capacity;
 
     public TemperatureSeriesAnalysis() {
         this.size = 0;
@@ -16,7 +16,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        this.temps = new double[0];
+        this.temperatures = new double[0];
         this.size = 0;
         this.capacity = 0;
         this.addTemps(temperatureSeries);
@@ -25,28 +25,28 @@ public class TemperatureSeriesAnalysis {
     public double average() {
         this.checkEmpty();
         double sum = 0;
-        for (double temp : this.temps) {
-            sum+=temp;
+        for (double temp : this.temperatures) {
+            sum += temp;
         }
-        return (sum/this.size);
+        return (sum / this.size);
     }
 
     public double deviation() {
         this.checkEmpty();
         double av = this.average();
         double sum = 0;
-        for (double temp : this.temps) {
-            sum+=(av-temp)*(av-temp);
+        for (double temp : this.temperatures) {
+            sum += (av - temp) * (av - temp);
         }
-        return Math.sqrt(sum/this.size);
+        return Math.sqrt(sum / this.size);
     }
 
     public double min() {
         this.checkEmpty();
-        double res = this.temps[0];
-        for (int i=0; i<this.size;i++) {
-            if (temps[i] < res) {
-                res = temps[i];
+        double res = this.temperatures[0];
+        for (int i = 0; i < this.size; i++) {
+            if (temperatures[i] < res) {
+                res = temperatures[i];
             }
         }
         return res;
@@ -54,10 +54,10 @@ public class TemperatureSeriesAnalysis {
 
     public double max() {
         this.checkEmpty();
-        double res = this.temps[0];
-        for (int i=0; i<this.size;i++) {
-            if (temps[i] > res) {
-                res = temps[i];
+        double res = this.temperatures[0];
+        for (int i = 0; i < this.size; i++) {
+            if (temperatures[i] > res) {
+                res = temperatures[i];
             }
         }
         return res;
@@ -69,11 +69,11 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToValue(double tempValue) {
         this.checkEmpty();
-        double res = this.temps[0];
-        System.out.println(Arrays.toString(this.temps));
-        for (int i=0; i<this.size;i++) {
-            if (Math.abs(temps[i]-tempValue) < Math.abs(res-tempValue)) {
-                res = temps[i];
+        double res = this.temperatures[0];
+        System.out.println(Arrays.toString(this.temperatures));
+        for (int i = 0; i < this.size; i++) {
+            if (Math.abs(temperatures[i] - tempValue) < Math.abs(res - tempValue)) {
+                res = temperatures[i];
             }
         }
         return res;
@@ -84,10 +84,10 @@ public class TemperatureSeriesAnalysis {
         this.checkEmpty();
         double[] res = new double[this.size];
         int i = 0;
-        for (int j=0; j<this.size;j++) {
-            if (temps[j] < tempValue) {
-                res[i] = temps[j];
-                i +=1;
+        for (int j = 0; j < this.size; j++) {
+            if (temperatures[j] < tempValue) {
+                res[i] = temperatures[j];
+                i += 1;
             }
         }
         double[] new_res = new double[i];
@@ -99,10 +99,10 @@ public class TemperatureSeriesAnalysis {
         this.checkEmpty();
         double[] res = new double[this.size];
         int i = 0;
-        for (int j=0; j<this.size;j++) {
-            if (temps[j] > tempValue) {
-                res[i] = temps[j];
-                i +=1;
+        for (int j = 0; j < this.size; j++) {
+            if (temperatures[j] > tempValue) {
+                res[i] = temperatures[j];
+                i += 1;
             }
         }
         double[] new_res = new double[i];
@@ -118,39 +118,39 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         this.checkTemps(temps);
         for (double temp : temps) {
-            this.resizeFill(this.size+1, temp);
+            this.resizeFill(this.size + 1, temp);
         }
         return this.size;
     }
 
-    private void resizeFill(int new_size, double fillWith){
-        if(new_size>this.capacity){
+    private void resizeFill(int new_size, double fillWith) {
+        if (new_size > this.capacity) {
             int new_capacity = this.capacity;
-            while(new_size>new_capacity){
-                new_capacity = new_capacity*2+1;
+            while (new_size > new_capacity) {
+                new_capacity = new_capacity * 2 + 1;
             }
             double[] new_temps = new double[new_capacity];
-            System.arraycopy(this.temps, 0, new_temps, 0, this.size);
-            this.temps = new_temps;
+            System.arraycopy(this.temperatures, 0, new_temps, 0, this.size);
+            this.temperatures = new_temps;
         }
 
         for (int i = this.size; i < new_size; i++) {
-            this.temps[i] = fillWith;
+            this.temperatures[i] = fillWith;
         }
         this.size = new_size;
 
     }
 
-    private void checkTemps(double[] temps){
+    private void checkTemps(double[] temps) {
         for (double temp : temps) {
-            if(temp<MIN_TEMP){
+            if (temp < MIN_TEMP) {
                 throw new InputMismatchException();
             }
         }
     }
 
-    private void checkEmpty(){
-        if(this.size == 0){
+    private void checkEmpty() {
+        if (this.size == 0) {
             throw new IllegalArgumentException();
         }
     }

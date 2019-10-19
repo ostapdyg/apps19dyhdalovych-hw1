@@ -12,7 +12,7 @@ public class TemperatureSeriesAnalysisTest {
     private TemperatureSeriesAnalysis analysis;
 
     @Before
-    public void setup(){
+    public void setup() {
         double[] oneElemSeries = {-1.0};
         oneElemAnalysis = new TemperatureSeriesAnalysis(oneElemSeries);
         double[] EmptySeries = {};
@@ -46,8 +46,8 @@ public class TemperatureSeriesAnalysisTest {
         double expResult = 1.0;
 
         double actualResult = analysis.average();
-        
-        assertEquals(expResult, actualResult, 0.00001);        
+
+        assertEquals(expResult, actualResult, 0.00001);
     }
 
     @Test
